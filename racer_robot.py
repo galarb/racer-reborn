@@ -7,7 +7,7 @@ from pid import PID
 from MotorController import MotorController
 import neopixel
 from machine import Pin, SoftI2C
-from machine_i2c_lcd import I2cLcd
+from i2c_lcd import I2cLcd
 from time import sleep
 
 encoder1_pin = 36
@@ -26,7 +26,7 @@ I2C_NUM_COLS = 20
 # Create objects
 robot = ev3lego_zk(encoder1_pin, encoder2_pin, in1_pin, in2_pin, wheel_size)
 display = TM1650(18, 19)
-mode_button = ModeButton(pin_num=34, modes=4)
+mode_button = ModeButton(pin_num=35, modes=4)
 pid = PID(54, 168, 4.3)
 us = Ultrasonic(trig_pin, echo_pin)
 controller = MotorController(robot, pid, us)
@@ -56,7 +56,7 @@ while True:
     
 
     if mode == 0:
-        lcd.backlight_on()
+        lcd.hal_backlight_on()
         print('run distance measurement')
         lcd.move_to(8, 0)
         lcd.putstr("Mode 0")
@@ -119,6 +119,3 @@ while True:
 
 robot.brake() 
 robot.stop()
-
-
-
